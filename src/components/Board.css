@@ -1,0 +1,116 @@
+.board-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+
+.board-svg {
+  border-radius: 8px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  background: #dcb35c;
+  max-width: 100%;
+  height: auto;
+}
+
+.cell-clickable {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* 桌面端悬停效果 */
+@media (hover: hover) and (pointer: fine) {
+  .cell-clickable:hover + .hover-stone {
+    opacity: 1;
+  }
+
+  .hover-stone {
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+
+  .cell-clickable:hover ~ .hover-stone {
+    opacity: 1;
+  }
+}
+
+/* 触摸设备隐藏hover效果 */
+@media (hover: none) {
+  .hover-stone {
+    display: none;
+  }
+}
+
+/* 触摸预览效果 */
+.touch-preview {
+  animation: touchPulse 0.3s ease-out;
+}
+
+@keyframes touchPulse {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* iPad 专用样式 */
+@media only screen
+  and (min-width: 768px)
+  and (max-width: 1024px) {
+  .board-container {
+    padding: 15px;
+  }
+
+  .board-svg {
+    max-height: 70vh;
+  }
+}
+
+/* iPad 横屏 */
+@media only screen
+  and (min-width: 768px)
+  and (max-width: 1366px)
+  and (orientation: landscape) {
+  .board-container {
+    padding: 10px;
+  }
+
+  .board-svg {
+    max-height: 65vh;
+  }
+}
+
+/* iPad 竖屏 */
+@media only screen
+  and (min-width: 768px)
+  and (max-width: 1024px)
+  and (orientation: portrait) {
+  .board-container {
+    padding: 20px 10px;
+  }
+
+  .board-svg {
+    max-width: 85vw;
+  }
+}
+
+/* 手机屏幕 */
+@media (max-width: 767px) {
+  .board-container {
+    padding: 10px 5px;
+  }
+
+  .board-svg {
+    max-width: 95vw;
+  }
+}
