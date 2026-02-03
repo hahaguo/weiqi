@@ -1,0 +1,75 @@
+name: Deploy to Production
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: '部署环境'
+        required: true
+        default: 'production'
+        type: choice
+        options:
+          - production
+          - staging
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: ${{ github.event.inputs.environment || 'production' }}
+      url: ${{ vars.DEPLOYMENT_URL }}
+
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+
+      - name: 部署到服务器
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          port: ${{ secrets.SERVER_PORT || 22 }}
+          script: |
+            cd ${{ secrets.DEPLOY_PATH || '/opt/weiqi' }}
+
+            echo "📥 拉取最新代码..."
+            git pull origin main
+
+            echo "🐳 拉取最新 Docker 镜像..."
+            docker-compose pull
+
+            echo "🔄 重启服务..."
+            docker-compose down
+            docker-compose up -d
+
+            echo "⏳ 等待服务启动..."
+            sleep 10
+
+            echo "🔍 检查服务状态..."
+            docker-compose ps
+
+            echo "✅ 健康检查..."
+            curl -f http://localhost:8080/health || exit 1
+
+            echo "🧹 清理旧镜像..."
+            docker image prune -af --filter "until=168h"
+
+            echo "✅ 部署完成！"
+
+      - name: 部署通知
+        if: always()
+        uses: 8398a7/action-slack@v3
+        with:
+          status: ${{ job.status }}
+          text: |
+            🚀 围棋教学游戏部署 ${{ job.status }}
+            环境: ${{ github.event.inputs.environment || 'production' }}
+            版本: ${{ github.ref_name }}
+            提交: ${{ github.sha }}
+          webhook_url: ${{ secrets.SLACK_WEBHOOK }}
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
