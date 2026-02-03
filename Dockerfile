@@ -14,6 +14,7 @@ RUN npm ci --only=production
 COPY . .
 
 # 构建生产版本
+RUN npm install
 RUN npm run build
 
 # 生产阶段 - 使用 nginx 提供静态文件
