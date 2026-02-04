@@ -54,6 +54,7 @@ jobs:
           tags: |
             type=ref,event=branch
             type=ref,event=tag
+            type=raw,value=latest,enable=${{ github.ref == 'refs/heads/main' }}
             # type=sha,format=short
 
       # 步骤6：构建并推送镜像
