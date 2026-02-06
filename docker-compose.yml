@@ -20,8 +20,8 @@ services:
     networks:
       - weiqi-network
     labels:
-      - "com.weiqi.description=围棋教学游戏"
-      - "com.weiqi.version=1.0.0"
+      - "com.weiqi.description=围棋教学游戏 - 支持人机对弈"
+      - "com.weiqi.version=1.1.0"
 
 networks:
   weiqi-network:

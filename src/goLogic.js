@@ -266,4 +266,51 @@ export class GoGame {
   getBoardCopy() {
     return this.board.map(row => [...row]);
   }
+
+  // 克隆整个游戏状态（用于AI模拟）
+  cloneGame() {
+    const cloned = new GoGame(this.size);
+    cloned.board = this.board.map(row => [...row]);
+    cloned.currentPlayer = this.currentPlayer;
+    cloned.capturedStones = { ...this.capturedStones };
+    cloned.koPoint = this.koPoint ? [...this.koPoint] : null;
+    cloned.history = this.history.map(h => ({
+      board: h.board.map(row => [...row]),
+      currentPlayer: h.currentPlayer,
+      capturedStones: { ...h.capturedStones },
+      koPoint: h.koPoint ? [...h.koPoint] : null
+    }));
+    return cloned;
+  }
+
+  // 获取所有空位
+  getAllEmptyPoints() {
+    const points = [];
+    for (let row = 0; row < this.size; row++) {
+      for (let col = 0; col < this.size; col++) {
+        if (this.board[row][col] === EMPTY) {
+          points.push([row, col]);
+        }
+      }
+    }
+    return points;
+  }
+
+  // 获取棋块详细信息
+  getGroupInfo(row, col) {
+    if (this.board[row][col] === EMPTY) {
+      return null;
+    }
+
+    const group = this.getGroup(row, col);
+    const liberties = this.countLiberties(group);
+    const color = this.board[row][col];
+
+    return {
+      stones: group,
+      count: group.length,
+      liberties: liberties,
+      color: color
+    };
+  }
 }

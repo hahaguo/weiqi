@@ -1,7 +1,7 @@
 {
   "name": "weiqi-teaching-game",
-  "version": "1.0.0",
-  "description": "围棋教学游戏",
+  "version": "1.1.0",
+  "description": "围棋教学游戏 - 支持人机对弈",
   "private": true,
   "scripts": {
     "dev": "vite",

@@ -1,0 +1,251 @@
+.ai-settings-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.ai-settings-card {
+  background: white;
+  border-radius: 20px;
+  padding: 40px;
+  max-width: 600px;
+  width: 100%;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.ai-settings-card h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 30px;
+  font-size: 28px;
+}
+
+.settings-section {
+  margin-bottom: 30px;
+}
+
+.settings-section h3 {
+  color: #555;
+  margin-bottom: 15px;
+  font-size: 18px;
+}
+
+/* 难度按钮 */
+.difficulty-buttons {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+}
+
+.difficulty-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 10px;
+  border: 2px solid #ddd;
+  border-radius: 12px;
+  background: white;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.difficulty-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.difficulty-btn.active {
+  border-color: #667eea;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.difficulty-btn .btn-icon {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.difficulty-btn .btn-text {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.difficulty-btn .btn-desc {
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+.difficulty-info {
+  margin-top: 15px;
+  padding: 10px;
+  background: #f5f5f5;
+  border-radius: 8px;
+}
+
+.difficulty-info p {
+  margin: 5px 0;
+  color: #666;
+  font-size: 14px;
+}
+
+/* 颜色选择按钮 */
+.color-buttons {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+}
+
+.color-btn {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 20px;
+  border: 2px solid #ddd;
+  border-radius: 12px;
+  background: white;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-size: 16px;
+}
+
+.color-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.color-btn.active {
+  border-color: #667eea;
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+}
+
+.stone-preview {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid #333;
+}
+
+.stone-preview.black {
+  background: linear-gradient(135deg, #2c3e50 0%, #000 100%);
+}
+
+.stone-preview.white {
+  background: linear-gradient(135deg, #fff 0%, #e0e0e0 100%);
+}
+
+/* AI类型切换 */
+.ai-type-toggle {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  cursor: pointer;
+  padding: 15px;
+  background: #f5f5f5;
+  border-radius: 8px;
+}
+
+.ai-type-toggle input[type="checkbox"] {
+  display: none;
+}
+
+.toggle-slider {
+  width: 50px;
+  height: 26px;
+  background: #ccc;
+  border-radius: 13px;
+  position: relative;
+  transition: background 0.3s;
+}
+
+.toggle-slider::after {
+  content: '';
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: white;
+  top: 2px;
+  left: 2px;
+  transition: transform 0.3s;
+}
+
+.ai-type-toggle input[type="checkbox"]:checked + .toggle-slider {
+  background: #667eea;
+}
+
+.ai-type-toggle input[type="checkbox"]:checked + .toggle-slider::after {
+  transform: translateX(24px);
+}
+
+.toggle-label {
+  font-size: 16px;
+  color: #333;
+}
+
+.info-text {
+  margin-top: 10px;
+  font-size: 13px;
+  color: #888;
+  line-height: 1.5;
+}
+
+/* 操作按钮 */
+.settings-actions {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+.action-btn {
+  padding: 15px 30px;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.action-btn.primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.action-btn.primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+.action-btn.secondary {
+  background: white;
+  color: #667eea;
+  border: 2px solid #667eea;
+}
+
+.action-btn.secondary:hover {
+  background: #f5f7ff;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .ai-settings-card {
+    padding: 25px;
+  }
+
+  .difficulty-buttons {
+    grid-template-columns: 1fr;
+  }
+
+  .color-buttons {
+    grid-template-columns: 1fr;
+  }
+
+  .settings-actions {
+    grid-template-columns: 1fr;
+  }
+}

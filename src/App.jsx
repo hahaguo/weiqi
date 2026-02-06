@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import Board from './components/Board';
 import TsumegoMode from './components/TsumegoMode';
+import AISettings from './components/AISettings';
+import AIGame from './components/AIGame';
 import Tutorial from './components/Tutorial';
 import { GoGame, BLACK, WHITE } from './goLogic';
 import './App.css';
 
 function App() {
-  const [mode, setMode] = useState('menu'); // menu, game, tsumego
+  const [mode, setMode] = useState('menu'); // menu, game, tsumego, ai-settings, ai-game
   const [boardSize, setBoardSize] = useState(19);
   const [game, setGame] = useState(null);
   const [updateCounter, setUpdateCounter] = useState(0); // 强制重新渲染
@@ -15,6 +17,11 @@ function App() {
   const [suggestions, setSuggestions] = useState([]);
   const [lastMove, setLastMove] = useState(null);
   const [showTutorial, setShowTutorial] = useState(false);
+  const [aiSettings, setAiSettings] = useState({
+    level: 'EASY',
+    playerColor: BLACK,
+    useRemoteAI: false
+  });
 
   useEffect(() => {
     if (mode === 'game') {
@@ -124,9 +131,16 @@ function App() {
           <div className="menu-buttons">
             <button
               className="menu-button primary"
+              onClick={() => setMode('ai-settings')}
+            >
+              🤖 人机对弈
+            </button>
+
+            <button
+              className="menu-button"
               onClick={() => setMode('game')}
             >
-              开始对弈
+              👥 双人对弈
             </button>
 
             <button
@@ -201,6 +215,31 @@ function App() {
     return (
       <div className="app">
         <TsumegoMode onBack={() => setMode('menu')} />
+      </div>
+    );
+  }
+
+  if (mode === 'ai-settings') {
+    return (
+      <div className="app">
+        <AISettings
+          settings={aiSettings}
+          onSettingsChange={setAiSettings}
+          onStartGame={() => setMode('ai-game')}
+          onBack={() => setMode('menu')}
+        />
+      </div>
+    );
+  }
+
+  if (mode === 'ai-game') {
+    return (
+      <div className="app">
+        <AIGame
+          boardSize={boardSize}
+          aiSettings={aiSettings}
+          onBack={() => setMode('ai-settings')}
+        />
       </div>
     );
   }
